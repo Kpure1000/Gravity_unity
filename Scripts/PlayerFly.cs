@@ -155,7 +155,7 @@ public class PlayerFly : MonoBehaviour
         for (int i = 0; i < ms.Count; i++)
         {
             dir = ms[i].position - curPos;
-            if (dir.magnitude < 0.8f)
+            if (dir.magnitude < 1.0f)
             {
                 isInStar = true;
                 continue;
