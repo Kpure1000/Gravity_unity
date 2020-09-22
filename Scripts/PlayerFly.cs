@@ -40,6 +40,7 @@ public class PlayerFly : MonoBehaviour
             maxY = Mathf.Max(maxY, item.position.y);
         }
         vel_main = initSpeed;
+        newVel = vel_main;
         newPos = transform.position;
     }
 
@@ -84,7 +85,7 @@ public class PlayerFly : MonoBehaviour
     {
         if (!flying)
         {
-            newPos = transform.position;
+            //newPos = transform.position;
             while (t <= maxT)
             {
                 CalAcc(newPos);
@@ -105,13 +106,13 @@ public class PlayerFly : MonoBehaviour
 
     public void FixedUpdate()
     {
-        CalAcc(transform.position);
-        if (!isInStar)
-        {
-            vel_main += acc_main * dt;
-        }
         if (flying)
         {
+            CalAcc(transform.position);
+            if (!isInStar)
+            {
+                vel_main += acc_main * dt;
+            }
             transform.position += (Vector3)vel_main * dt;
         }
         else
@@ -122,6 +123,7 @@ public class PlayerFly : MonoBehaviour
     /// <summary>
     /// 计算加速度
     /// </summary>
+    [Obsolete("不用了",false)]
     public void CalAcc()
     {
         acc_main = Vector2.zero;
@@ -153,7 +155,7 @@ public class PlayerFly : MonoBehaviour
         for (int i = 0; i < ms.Count; i++)
         {
             dir = ms[i].position - curPos;
-            if (dir.magnitude < 2.0f)
+            if (dir.magnitude < 0.8f)
             {
                 isInStar = true;
                 continue;
@@ -181,7 +183,7 @@ public class PlayerFly : MonoBehaviour
         Gizmos.DrawLine(transform.position, (Vector2)transform.position + 20 * acc_main);
 
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(tmpCenterPos, maxDis/2);
+        Gizmos.DrawWireSphere(tmpCenterPos, maxDis / 2);
     }
 
     //public void OnTriggerEnter2D(Collider2D collision)
